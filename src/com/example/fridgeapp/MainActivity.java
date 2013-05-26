@@ -1,9 +1,16 @@
 package com.example.fridgeapp;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -18,6 +25,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.fridgeapp.db_adapters.DBSettingsAdapter;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -66,6 +76,44 @@ public class MainActivity extends FragmentActivity implements
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
+		
+		// checking SettingsDB
+        try {        	
+        	String destPath = "/data/data/" + getPackageName() + "/databases/SettingsDB";
+        	File f = new File(destPath);        	
+        	if (!f.exists()) {        	
+			    CopyDB( getBaseContext().getAssets().open("mydb"), 
+					new FileOutputStream(destPath));
+        	}
+		} catch (FileNotFoundException e) {			
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
+        DBSettingsAdapter db = new DBSettingsAdapter(this); 
+
+        
+        //---add some records---
+        
+//        db.open();        
+//        long id = db.insertRecord(-2, "Hello World");        
+//        id = db.insertRecord(-4, "Workbook Exercises");
+//        db.close();
+        
+        
+        //---get all Records---
+        
+        db.open();
+        Cursor c = db.getAllRecords();
+        if (c.moveToFirst())
+        {
+            do {          
+                DisplayRecord(c);
+            } while (c.moveToNext());
+        }
+        db.close();
+        
 	}
 
 	@Override
@@ -135,4 +183,25 @@ public class MainActivity extends FragmentActivity implements
 			return 2;
 		}
 	}
+	
+    public void CopyDB(InputStream inputStream, OutputStream outputStream) 
+    throws IOException {
+        //---copy 1K bytes at a time---
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = inputStream.read(buffer)) > 0) {
+            outputStream.write(buffer, 0, length);
+        }
+        inputStream.close();
+        outputStream.close();
+    }
+    
+    public void DisplayRecord(Cursor c)
+    {
+        Toast.makeText(this, 
+                "id: " + c.getString(0) + "\n" +
+                "Title: " + c.getString(1) + "\n" +
+                "Due Date:  " + c.getString(2),
+                Toast.LENGTH_SHORT).show();        
+    } 
 }
