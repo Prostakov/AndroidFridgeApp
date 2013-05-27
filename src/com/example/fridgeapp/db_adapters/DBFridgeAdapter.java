@@ -10,19 +10,20 @@ import android.util.Log;
 
 public class DBFridgeAdapter {
     public static final String KEY_ROWID = "id";
-    public static final String KEY_TITLE = "title";
+    public static final String KEY_NAME = "name";
     public static final String KEY_DUEDATE = "duedate";
-    public static final String KEY_COURSE = "course";
-    public static final String KEY_NOTES = "notes";
+    public static final String KEY_SURROGATES = "surrogates";
+    public static final String KEY_QUANTITY = "quantity";
+    public static final String KEY_ALARM = "alarm";
     private static final String TAG = "DBAdapter";
     
-    private static final String DATABASE_NAME = "AssignmentsDB";
-    private static final String DATABASE_TABLE = "assignments";
+    private static final String DATABASE_NAME = "FridgeDB";
+    private static final String DATABASE_TABLE = "fridge";
     private static final int DATABASE_VERSION = 2;
 
     private static final String DATABASE_CREATE =
-        "create table if not exists assignments (id integer primary key autoincrement, "
-        + "title VARCHAR not null, duedate date, course VARCHAR, notes VARCHAR );";
+        "create table if not exists fridge (id integer primary key autoincrement, "
+        + "name VARCHAR not null, duedate VARCHAR, surrogates VARCHAR, quantity integer, alarm integer );";
         
     private final Context context;    
 
@@ -76,13 +77,14 @@ public class DBFridgeAdapter {
     }
     
     //---insert a record into the database---
-    public long insertRecord(String title, String duedate, String course, String notes) 
+    public long insertRecord(String name, String duedate, String surrogates, long quantity, long alarm) 
     {
         ContentValues initialValues = new ContentValues();
-        initialValues.put(KEY_TITLE, title);
+        initialValues.put(KEY_NAME, name);
         initialValues.put(KEY_DUEDATE, duedate);
-        initialValues.put(KEY_COURSE, course);
-        initialValues.put(KEY_NOTES, notes);
+        initialValues.put(KEY_SURROGATES, surrogates);
+        initialValues.put(KEY_QUANTITY, quantity);
+        initialValues.put(KEY_ALARM, alarm);
         return db.insert(DATABASE_TABLE, null, initialValues);
     }
 
@@ -95,8 +97,8 @@ public class DBFridgeAdapter {
     //---retrieves all the records---
     public Cursor getAllRecords() 
     {
-        return db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE,
-                KEY_DUEDATE, KEY_COURSE, KEY_NOTES}, null, null, null, null, null);
+        return db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_NAME,
+                KEY_DUEDATE, KEY_QUANTITY, KEY_SURROGATES , KEY_ALARM}, null, null, null, null, null);
     }
 
     //---retrieves a particular record---
@@ -104,7 +106,7 @@ public class DBFridgeAdapter {
     {
         Cursor mCursor =
                 db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                KEY_TITLE, KEY_DUEDATE, KEY_COURSE, KEY_NOTES}, 
+                KEY_NAME, KEY_DUEDATE, KEY_QUANTITY, KEY_SURROGATES , KEY_ALARM}, 
                 KEY_ROWID + "=" + rowId, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -113,13 +115,14 @@ public class DBFridgeAdapter {
     }
 
     //---updates a record---
-    public boolean updateRecord(long rowId, String title, String duedate, String course, String notes) 
+    public boolean updateRecord(long rowId, String name, String duedate, String surrogates, long quantity, long alarm) 
     {
         ContentValues args = new ContentValues();
-        args.put(KEY_TITLE, title);
+        args.put(KEY_NAME, name);
         args.put(KEY_DUEDATE, duedate);
-        args.put(KEY_COURSE, course);
-        args.put(KEY_NOTES, notes);
+        args.put(KEY_SURROGATES, surrogates);
+        args.put(KEY_QUANTITY, quantity);
+        args.put(KEY_ALARM, alarm);
         return db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
     }
 }

@@ -10,19 +10,17 @@ import android.util.Log;
 
 public class DBShopListAdapter {
     public static final String KEY_ROWID = "id";
-    public static final String KEY_TITLE = "title";
-    public static final String KEY_DUEDATE = "duedate";
-    public static final String KEY_COURSE = "course";
-    public static final String KEY_NOTES = "notes";
+    public static final String KEY_NAME = "name";
+    public static final String KEY_RATING = "rating";
     private static final String TAG = "DBAdapter";
     
-    private static final String DATABASE_NAME = "AssignmentsDB";
-    private static final String DATABASE_TABLE = "assignments";
+    private static final String DATABASE_NAME = "ShopListDB";
+    private static final String DATABASE_TABLE = "shoplist";
     private static final int DATABASE_VERSION = 2;
 
     private static final String DATABASE_CREATE =
-        "create table if not exists assignments (id integer primary key autoincrement, "
-        + "title VARCHAR not null, duedate date, course VARCHAR, notes VARCHAR );";
+        "create table if not exists shoplist (id integer primary key autoincrement, "
+        + "name VARCHAR not null, rating integer);";
         
     private final Context context;    
 
@@ -76,18 +74,16 @@ public class DBShopListAdapter {
     }
     
     //---insert a record into the database---
-    public long insertRecord(String title, String duedate, String course, String notes) 
+    public long insertRecord(String name, long rating) 
     {
         ContentValues initialValues = new ContentValues();
-        initialValues.put(KEY_TITLE, title);
-        initialValues.put(KEY_DUEDATE, duedate);
-        initialValues.put(KEY_COURSE, course);
-        initialValues.put(KEY_NOTES, notes);
+        initialValues.put(KEY_NAME, name);
+        initialValues.put(KEY_RATING, rating);
         return db.insert(DATABASE_TABLE, null, initialValues);
     }
 
     //---deletes a particular record---
-    public boolean deleteContact(long rowId) 
+    public boolean deleteRecord(long rowId) 
     {
         return db.delete(DATABASE_TABLE, KEY_ROWID + "=" + rowId, null) > 0;
     }
@@ -95,8 +91,8 @@ public class DBShopListAdapter {
     //---retrieves all the records---
     public Cursor getAllRecords() 
     {
-        return db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE,
-                KEY_DUEDATE, KEY_COURSE, KEY_NOTES}, null, null, null, null, null);
+        return db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_NAME,
+                KEY_RATING}, null, null, null, null, null);
     }
 
     //---retrieves a particular record---
@@ -104,7 +100,7 @@ public class DBShopListAdapter {
     {
         Cursor mCursor =
                 db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                KEY_TITLE, KEY_DUEDATE, KEY_COURSE, KEY_NOTES}, 
+                KEY_NAME, KEY_RATING}, 
                 KEY_ROWID + "=" + rowId, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -113,13 +109,11 @@ public class DBShopListAdapter {
     }
 
     //---updates a record---
-    public boolean updateRecord(long rowId, String title, String duedate, String course, String notes) 
+    public boolean updateRecord(long rowId, String name, long rating) 
     {
         ContentValues args = new ContentValues();
-        args.put(KEY_TITLE, title);
-        args.put(KEY_DUEDATE, duedate);
-        args.put(KEY_COURSE, course);
-        args.put(KEY_NOTES, notes);
+        args.put(KEY_NAME, name);
+        args.put(KEY_RATING, rating);
         return db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
     }
 }

@@ -1,7 +1,11 @@
 package com.example.fridgeapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.fridgeapp.R;
 
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,12 +20,45 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fridgeapp.db_adapters.DBShopListAdapter;
+import com.example.fridgeapp.product_classes.Product;
+import com.example.fridgeapp.products.Ananas;
+import com.example.fridgeapp.products.Apple;
+import com.example.fridgeapp.products.Banana;
+import com.example.fridgeapp.products.Beef;
+import com.example.fridgeapp.products.Bread;
+import com.example.fridgeapp.products.Carassius;
+import com.example.fridgeapp.products.Carrot;
+import com.example.fridgeapp.products.Chicken;
+import com.example.fridgeapp.products.ChickenEggs;
+import com.example.fridgeapp.products.Cola;
+import com.example.fridgeapp.products.Cucumber;
+import com.example.fridgeapp.products.Esox;
+import com.example.fridgeapp.products.Juice;
+import com.example.fridgeapp.products.Ketchup;
+import com.example.fridgeapp.products.Lemon;
+import com.example.fridgeapp.products.Mayonnaise;
+import com.example.fridgeapp.products.Milk;
+import com.example.fridgeapp.products.Mineral;
+import com.example.fridgeapp.products.Mustard;
+import com.example.fridgeapp.products.Orange;
+import com.example.fridgeapp.products.Perch;
+import com.example.fridgeapp.products.Pork;
+import com.example.fridgeapp.products.SourCream;
+import com.example.fridgeapp.products.Tomato;
+import com.example.fridgeapp.products.Veal;
+import com.example.fridgeapp.products.Yoghurt;
+
 public class MainActivityShopList extends Fragment {
 
 	TableLayout tableLayout;
 	Button add_item_button;
+	DBShopListAdapter db;
+	List<Product> productsArray;
 
 	public MainActivityShopList() {
+		productsArray = new ArrayList<Product>();
+
 	}
 
 	@Override
@@ -39,8 +76,184 @@ public class MainActivityShopList extends Fragment {
 				addItemToList("GogogoBobobo", "20");
 			}
 		});
-		addItems();
+		db = new DBShopListAdapter(getActivity());
+		createProductsArray();
+		printAllProducts();
 		return rootView;
+	}
+	
+	public void createProductsArray() {
+		db.open();
+		Cursor c = db.getAllRecords();
+		if (c.moveToFirst()) {
+			do {
+				if (c.getString(1).equalsIgnoreCase("Ananas")) {
+					Ananas ananas = new Ananas();
+					ananas.rating = Integer.parseInt(c.getString(2));
+					ananas.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(ananas);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Apple")) {
+					Apple apple = new Apple();
+					apple.rating = Integer.parseInt(c.getString(2));
+					apple.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(apple);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Banana")) {
+					Banana banana = new Banana();
+					banana.rating = Integer.parseInt(c.getString(2));
+					banana.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(banana);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Beef")) {
+					Beef beef = new Beef();
+					beef.rating = Integer.parseInt(c.getString(2));
+					beef.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(beef);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Bread")) {
+					Bread bread = new Bread();
+					bread.rating = Integer.parseInt(c.getString(2));
+					bread.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(bread);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Carassius")) {
+					Carassius ñarassius = new Carassius();
+					ñarassius.rating = Integer.parseInt(c.getString(2));
+					ñarassius.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(ñarassius);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Carrot")) {
+					Carrot carrot = new Carrot();
+					carrot.rating = Integer.parseInt(c.getString(2));
+					carrot.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(carrot);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Chicken")) {
+					Chicken chicken = new Chicken();
+					chicken.rating = Integer.parseInt(c.getString(2));
+					chicken.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(chicken);
+				}
+				else if (c.getString(1).equalsIgnoreCase("ChickenEggs")) {
+					ChickenEggs chickenEggs = new ChickenEggs();
+					chickenEggs.rating = Integer.parseInt(c.getString(2));
+					chickenEggs.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(chickenEggs);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Cola")) {
+					Cola cola = new Cola();
+					cola.rating = Integer.parseInt(c.getString(2));
+					cola.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(cola);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Cucumber")) {
+					Cucumber ñucumber = new Cucumber();
+					ñucumber.rating = Integer.parseInt(c.getString(2));
+					ñucumber.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(ñucumber);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Esox")) {
+					Esox esox = new Esox();
+					esox.rating = Integer.parseInt(c.getString(2));
+					esox.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(esox);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Juice")) {
+					Juice juice = new Juice();
+					juice.rating = Integer.parseInt(c.getString(2));
+					juice.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(juice);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Ketchup")) {
+					Ketchup ketchup = new Ketchup();
+					ketchup.rating = Integer.parseInt(c.getString(2));
+					ketchup.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(ketchup);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Lemon")) {
+					Lemon lemon = new Lemon();
+					lemon.rating = Integer.parseInt(c.getString(2));
+					lemon.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(lemon);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Mayonnaise")) {
+					Mayonnaise mayonnaise = new Mayonnaise();
+					mayonnaise.rating = Integer.parseInt(c.getString(2));
+					mayonnaise.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(mayonnaise);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Milk")) {
+					Milk milk = new Milk();
+					milk.rating = Integer.parseInt(c.getString(2));
+					milk.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(milk);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Mineral")) {
+					Mineral mineral = new Mineral();
+					mineral.rating = Integer.parseInt(c.getString(2));
+					mineral.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(mineral);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Mustard")) {
+					Mustard mustard = new Mustard();
+					mustard.rating = Integer.parseInt(c.getString(2));
+					mustard.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(mustard);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Orange")) {
+					Orange orange = new Orange();
+					orange.rating = Integer.parseInt(c.getString(2));
+					orange.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(orange);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Perch")) {
+					Perch perch = new Perch();
+					perch.rating = Integer.parseInt(c.getString(2));
+					perch.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(perch);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Pork")) {
+					Pork pork = new Pork();
+					pork.rating = Integer.parseInt(c.getString(2));
+					pork.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(pork);
+				}
+				else if (c.getString(1).equalsIgnoreCase("SourCream")) {
+					SourCream sourCream = new SourCream();
+					sourCream.rating = Integer.parseInt(c.getString(2));
+					sourCream.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(sourCream);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Tomato")) {
+					Tomato tomato = new Tomato();
+					tomato.rating = Integer.parseInt(c.getString(2));
+					tomato.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(tomato);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Veal")) {
+					Veal veal = new Veal();
+					veal.rating = Integer.parseInt(c.getString(2));
+					veal.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(veal);
+				}
+				else if (c.getString(1).equalsIgnoreCase("Yoghurt")) {
+					Yoghurt yoghurt = new Yoghurt();
+					yoghurt.rating = Integer.parseInt(c.getString(2));
+					yoghurt.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(yoghurt);
+				}
+			} while (c.moveToNext());
+		}
+		db.close();
+	}
+	
+	public void printAllProducts() {
+		for (Product v : productsArray) {
+			addItemToList(v.getNameUA(), Integer.toString(v.rating));
+		}
+		Toast toast = Toast.makeText(getActivity(), Integer.toString(productsArray.size()), 5);
+		toast.show();
 	}
 
 	public void addItemToList(String name, String rating) {
@@ -60,15 +273,5 @@ public class MainActivityShopList extends Fragment {
 			};
 		});
 	}
-	
-	public void addItems() {
-		addItemToList("Cabbages","10");
-		addItemToList("Milk","10");
-		addItemToList("Eggs","9");
-		addItemToList("Cucumbers","7");
-		addItemToList("Tomatoes","6");
-		addItemToList("Bread","6");
-		addItemToList("Vodka","5");
-		addItemToList("Honey","4");
-	}
+
 }

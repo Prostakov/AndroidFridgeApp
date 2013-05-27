@@ -28,6 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fridgeapp.db_adapters.DBSettingsAdapter;
+import com.example.fridgeapp.db_adapters.DBFridgeAdapter;
+import com.example.fridgeapp.db_adapters.DBShopListAdapter;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -91,28 +93,60 @@ public class MainActivity extends FragmentActivity implements
 			e.printStackTrace();
 		}
         
-        DBSettingsAdapter db = new DBSettingsAdapter(this); 
+		// checking ShopListDB
+        try {        	
+        	String destPath = "/data/data/" + getPackageName() + "/databases/ShopListDB";
+        	File f = new File(destPath);        	
+        	if (!f.exists()) {        	
+			    CopyDB( getBaseContext().getAssets().open("mydb"), 
+					new FileOutputStream(destPath));
+        	}
+		} catch (FileNotFoundException e) {			
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
+		// checking FridgeDB
+        try {        	
+        	String destPath = "/data/data/" + getPackageName() + "/databases/FridgeDB";
+        	File f = new File(destPath);        	
+        	if (!f.exists()) {        	
+			    CopyDB( getBaseContext().getAssets().open("mydb"), 
+					new FileOutputStream(destPath));
+        	}
+		} catch (FileNotFoundException e) {			
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
+        
 
+        DBShopListAdapter db = new DBShopListAdapter(this);
         
         //---add some records---
         
 //        db.open();        
-//        long id = db.insertRecord(-2, "Hello World");        
-//        id = db.insertRecord(-4, "Workbook Exercises");
+//        long id = db.insertRecord("Cucumber", 10);        
+//        id = db.insertRecord("Tomato", 9);
+//        id = db.insertRecord("Pork", 6);
+//        id = db.insertRecord("Beef", 5);
+//        id = db.insertRecord("Chicken", 3);
+//        id = db.insertRecord("ChickenEggs", 2);
 //        db.close();
         
         
         //---get all Records---
-        
-        db.open();
-        Cursor c = db.getAllRecords();
-        if (c.moveToFirst())
-        {
-            do {          
-                DisplayRecord(c);
-            } while (c.moveToNext());
-        }
-        db.close();
+//        db.open();
+//        Cursor c = db.getAllRecords();
+//        if (c.moveToFirst())
+//        {
+//            do {          
+//                DisplayRecord(c);
+//            } while (c.moveToNext());
+//        }
+//        db.close();
         
 	}
 
