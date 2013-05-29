@@ -107,6 +107,8 @@ public class MainActivity extends FragmentActivity implements
 			e.printStackTrace();
 		}
         
+//        this.deleteDatabase("FridgeDB");
+                
 		// checking FridgeDB
         try {        	
         	String destPath = "/data/data/" + getPackageName() + "/databases/FridgeDB";
@@ -123,19 +125,30 @@ public class MainActivity extends FragmentActivity implements
         
         
 
-        DBShopListAdapter db = new DBShopListAdapter(this);
+//        DBFridgeAdapter db = new DBFridgeAdapter(this);
+//        DBShopListAdapter db = new DBShopListAdapter(this);
         
-        //---add some records---
+        //---add some records to shoplist---
         
 //        db.open();        
-//        long id = db.insertRecord("Cucumber", 10);        
-//        id = db.insertRecord("Tomato", 9);
-//        id = db.insertRecord("Pork", 6);
+//        long id = db.insertRecord("Cucumber", 10); 
 //        id = db.insertRecord("Beef", 5);
 //        id = db.insertRecord("Chicken", 3);
-//        id = db.insertRecord("ChickenEggs", 2);
+//        id = db.insertRecord("ChickenEggs", 2);       
+//        id = db.insertRecord("Tomato", 9);
+//        id = db.insertRecord("Pork", 6);
 //        db.close();
+
+        //---add some records to fridge---
         
+//      db.open();        
+//      long id = db.insertRecord("Ananas", "3/06/2013", "11:06", "ï³ï³", 4, 0); 
+//      id = db.insertRecord("Beef", "11/06/2013", "11:06", "ï³ï³", 12, 0);
+//      id = db.insertRecord("Chicken", "11/06/2013", "11:06", "ï³ï³", 25, 0);
+//      id = db.insertRecord("ChickenEggs", "11/06/2013", "11:06", "ï³ï³", 40, 0);       
+//      id = db.insertRecord("Tomato", "11/06/2013", "11:06", "ï³ï³", 52, 0);
+//      id = db.insertRecord("Pork", "11/06/2013", "11:06", "ï³ï³", 42, 0);
+//      db.close();
         
         //---get all Records---
 //        db.open();
@@ -146,6 +159,12 @@ public class MainActivity extends FragmentActivity implements
 //                DisplayRecord(c);
 //            } while (c.moveToNext());
 //        }
+//        db.close();
+        
+//        db.open();
+//        for (long i = 7; i < 13; i++) {
+//        	db.deleteContact(i);
+//		}
 //        db.close();
         
 	}
@@ -233,9 +252,13 @@ public class MainActivity extends FragmentActivity implements
     public void DisplayRecord(Cursor c)
     {
         Toast.makeText(this, 
-                "id: " + c.getString(0) + "\n" +
-                "Title: " + c.getString(1) + "\n" +
-                "Due Date:  " + c.getString(2),
+                "0:" + c.getString(0) + "\n" +
+                "1:" + c.getString(1) + "\n" +
+                "2:" + c.getString(2) + "\n" +
+                "3:" + c.getString(3) + "\n" +
+                "4:" + c.getString(4) + "\n" +
+                "5:" + c.getString(5) + "\n" +
+                "6:" + c.getString(6) + "\n",
                 Toast.LENGTH_SHORT).show();        
     } 
 }

@@ -58,7 +58,6 @@ public class MainActivityShopList extends Fragment {
 
 	public MainActivityShopList() {
 		productsArray = new ArrayList<Product>();
-
 	}
 
 	@Override
@@ -78,6 +77,7 @@ public class MainActivityShopList extends Fragment {
 		});
 		db = new DBShopListAdapter(getActivity());
 		createProductsArray();
+		sortProductsArray();
 		printAllProducts();
 		return rootView;
 	}
@@ -118,10 +118,10 @@ public class MainActivityShopList extends Fragment {
 					productsArray.add(bread);
 				}
 				else if (c.getString(1).equalsIgnoreCase("Carassius")) {
-					Carassius ñarassius = new Carassius();
-					ñarassius.rating = Integer.parseInt(c.getString(2));
-					ñarassius.db_id = Integer.parseInt(c.getString(0));
-					productsArray.add(ñarassius);
+					Carassius carassius = new Carassius();
+					carassius.rating = Integer.parseInt(c.getString(2));
+					carassius.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(carassius);
 				}
 				else if (c.getString(1).equalsIgnoreCase("Carrot")) {
 					Carrot carrot = new Carrot();
@@ -148,10 +148,10 @@ public class MainActivityShopList extends Fragment {
 					productsArray.add(cola);
 				}
 				else if (c.getString(1).equalsIgnoreCase("Cucumber")) {
-					Cucumber ñucumber = new Cucumber();
-					ñucumber.rating = Integer.parseInt(c.getString(2));
-					ñucumber.db_id = Integer.parseInt(c.getString(0));
-					productsArray.add(ñucumber);
+					Cucumber cucumber = new Cucumber();
+					cucumber.rating = Integer.parseInt(c.getString(2));
+					cucumber.db_id = Integer.parseInt(c.getString(0));
+					productsArray.add(cucumber);
 				}
 				else if (c.getString(1).equalsIgnoreCase("Esox")) {
 					Esox esox = new Esox();
@@ -248,12 +248,26 @@ public class MainActivityShopList extends Fragment {
 		db.close();
 	}
 	
+	public void sortProductsArray() {
+		Product someProduct;
+		Boolean sort = true;
+		while (sort == true) {
+			sort = false;
+			for (int i = 1; i < productsArray.size(); i++) {
+				if (productsArray.get(i).rating > productsArray.get(i-1).rating) {
+					someProduct = productsArray.get(i);
+					productsArray.set(i, productsArray.get(i-1));
+					productsArray.set(i-1, someProduct);
+					sort = true;
+				}
+			}			
+		}
+	}
+	
 	public void printAllProducts() {
 		for (Product v : productsArray) {
 			addItemToList(v.getNameUA(), Integer.toString(v.rating));
 		}
-		Toast toast = Toast.makeText(getActivity(), Integer.toString(productsArray.size()), 5);
-		toast.show();
 	}
 
 	public void addItemToList(String name, String rating) {

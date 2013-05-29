@@ -12,6 +12,7 @@ public class DBFridgeAdapter {
     public static final String KEY_ROWID = "id";
     public static final String KEY_NAME = "name";
     public static final String KEY_DUEDATE = "duedate";
+    public static final String KEY_ALARMTIME = "alarmtime";
     public static final String KEY_SURROGATES = "surrogates";
     public static final String KEY_QUANTITY = "quantity";
     public static final String KEY_ALARM = "alarm";
@@ -19,11 +20,11 @@ public class DBFridgeAdapter {
     
     private static final String DATABASE_NAME = "FridgeDB";
     private static final String DATABASE_TABLE = "fridge";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private static final String DATABASE_CREATE =
         "create table if not exists fridge (id integer primary key autoincrement, "
-        + "name VARCHAR not null, duedate VARCHAR, surrogates VARCHAR, quantity integer, alarm integer );";
+        + "name VARCHAR not null, duedate VARCHAR, alarmtime VARCHAR, surrogates VARCHAR, quantity integer, alarm integer );";
         
     private final Context context;    
 
@@ -58,7 +59,7 @@ public class DBFridgeAdapter {
         {
             Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
                     + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS contacts");
+            db.execSQL("DROP TABLE IF EXISTS fridge");
             onCreate(db);
         }
     }    
@@ -77,11 +78,12 @@ public class DBFridgeAdapter {
     }
     
     //---insert a record into the database---
-    public long insertRecord(String name, String duedate, String surrogates, long quantity, long alarm) 
+    public long insertRecord(String name, String duedate, String time, String surrogates, long quantity, long alarm) 
     {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_NAME, name);
         initialValues.put(KEY_DUEDATE, duedate);
+        initialValues.put(KEY_ALARMTIME, time);
         initialValues.put(KEY_SURROGATES, surrogates);
         initialValues.put(KEY_QUANTITY, quantity);
         initialValues.put(KEY_ALARM, alarm);
@@ -98,7 +100,7 @@ public class DBFridgeAdapter {
     public Cursor getAllRecords() 
     {
         return db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_NAME,
-                KEY_DUEDATE, KEY_QUANTITY, KEY_SURROGATES , KEY_ALARM}, null, null, null, null, null);
+                KEY_DUEDATE, KEY_ALARMTIME, KEY_SURROGATES, KEY_QUANTITY , KEY_ALARM}, null, null, null, null, null);
     }
 
     //---retrieves a particular record---
@@ -106,20 +108,33 @@ public class DBFridgeAdapter {
     {
         Cursor mCursor =
                 db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                KEY_NAME, KEY_DUEDATE, KEY_QUANTITY, KEY_SURROGATES , KEY_ALARM}, 
+                KEY_NAME, KEY_DUEDATE, KEY_ALARMTIME, KEY_SURROGATES, KEY_QUANTITY , KEY_ALARM}, 
                 KEY_ROWID + "=" + rowId, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
         }
         return mCursor;
     }
+    
+	// ---finds a record by name
+	public Cursor findRecord(String name) {
+        Cursor mCursor =
+                db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
+                KEY_NAME, KEY_DUEDATE, KEY_ALARMTIME, KEY_SURROGATES, KEY_QUANTITY, KEY_ALARM}, 
+                KEY_NAME + "=" + name, null, null, null, null, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+	}
 
     //---updates a record---
-    public boolean updateRecord(long rowId, String name, String duedate, String surrogates, long quantity, long alarm) 
+    public boolean updateRecord(long rowId, String name, String duedate, String time, String surrogates, long quantity, long alarm) 
     {
         ContentValues args = new ContentValues();
         args.put(KEY_NAME, name);
         args.put(KEY_DUEDATE, duedate);
+        args.put(KEY_ALARMTIME, time);
         args.put(KEY_SURROGATES, surrogates);
         args.put(KEY_QUANTITY, quantity);
         args.put(KEY_ALARM, alarm);
