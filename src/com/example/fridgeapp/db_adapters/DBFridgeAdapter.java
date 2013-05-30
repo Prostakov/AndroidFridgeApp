@@ -77,8 +77,13 @@ public class DBFridgeAdapter {
         DBHelper.close();
     }
     
+    public long createRecord(String name, String duedate, String time, String surrogates, long quantity, long alarm) {
+    	if (findRecord(name)!=-1) return -1;
+		return insertRecord(name, duedate, time, surrogates, quantity, alarm);
+    }
+    
     //---insert a record into the database---
-    public long insertRecord(String name, String duedate, String time, String surrogates, long quantity, long alarm) 
+    private long insertRecord(String name, String duedate, String time, String surrogates, long quantity, long alarm) 
     {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_NAME, name);
@@ -103,6 +108,14 @@ public class DBFridgeAdapter {
                 KEY_DUEDATE, KEY_ALARMTIME, KEY_SURROGATES, KEY_QUANTITY , KEY_ALARM}, null, null, null, null, null);
     }
 
+	// ---finds a record by name
+	public long findRecord(String name) throws SQLException {
+		Cursor mCursor = db.rawQuery("SELECT * FROM "+DATABASE_TABLE+" WHERE "+KEY_NAME+" = ?", new String[] {name});
+		if (mCursor != null) mCursor.moveToFirst();
+		if (mCursor.getCount() == 0) return -1;
+		return Long.parseLong(mCursor.getString(0));
+	}
+    
     //---retrieves a particular record---
     public Cursor getRecord(long rowId) throws SQLException 
     {
@@ -115,18 +128,6 @@ public class DBFridgeAdapter {
         }
         return mCursor;
     }
-    
-	// ---finds a record by name
-	public Cursor findRecord(String name) {
-        Cursor mCursor =
-                db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                KEY_NAME, KEY_DUEDATE, KEY_ALARMTIME, KEY_SURROGATES, KEY_QUANTITY, KEY_ALARM}, 
-                KEY_NAME + "=" + name, null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
-        return mCursor;
-	}
 
     //---updates a record---
     public boolean updateRecord(long rowId, String name, String duedate, String time, String surrogates, long quantity, long alarm) 

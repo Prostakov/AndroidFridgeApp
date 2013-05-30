@@ -81,11 +81,14 @@ public class AddItemToShopListActivity extends Activity {
 		add_item_button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if (spinnerProductType.getSelectedItem().toString() == "Select" ||
+					spinnerProduct.getSelectedItem().toString() == "Select" ||
+					spinnerProductRating.getSelectedItem().toString() == "Select") return;
 				String name = (String) spinnerProduct.getSelectedItem();
 				name = Product.getProductNameEN(name);
 				int rating = Integer.parseInt(spinnerProductRating.getSelectedItem().toString());
 				db.open();
-				long id = db.insertRecord(name, rating);
+				long id = db.createRecord(name, rating);
 				db.close();
 				Intent intent = new Intent(context, MainActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

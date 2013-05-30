@@ -66,7 +66,11 @@ public class DBShopListAdapter {
 	}
 
 	// ---insert a record into the database---
-	public long insertRecord(String name, long rating) {
+	public long createRecord(String name, long rating) {
+		if (findRecord(name)!=-1) return -1;
+		return insertRecord(name, rating);
+	}
+	private long insertRecord(String name, long rating) {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(KEY_NAME, name);
 		initialValues.put(KEY_RATING, rating);
@@ -87,9 +91,8 @@ public class DBShopListAdapter {
 	// ---finds a record by name
 	public long findRecord(String name) throws SQLException {
 		Cursor mCursor = db.rawQuery("SELECT * FROM "+DATABASE_TABLE+" WHERE "+KEY_NAME+" = ?", new String[] {name});
-		if (mCursor != null) {
-			mCursor.moveToFirst();
-		}
+		if (mCursor != null) mCursor.moveToFirst();
+		if (mCursor.getCount() == 0) return -1;
 		return Long.parseLong(mCursor.getString(0));
 	}
 

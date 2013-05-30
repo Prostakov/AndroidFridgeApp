@@ -302,7 +302,7 @@ public class MainActivityShopList extends Fragment {
 																long recordId = db
 																		.findRecord(Product
 																				.getProductNameEN(dialogTempText));
-																db.deleteRecord(recordId);
+																if (recordId != -1) db.deleteRecord(recordId);
 																db.close();
 																renderList();
 															}
