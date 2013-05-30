@@ -11,6 +11,11 @@ public class Lemon extends Fruit {
 	}
 	
 	@Override
+	public String getQuantity() {
+		return Integer.toString(quantity);
+	}
+	
+	@Override
 	public String getName() {
 		return "Lemon";
 	}

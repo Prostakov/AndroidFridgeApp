@@ -10,7 +10,14 @@
     <string name="rating">Rating</string>
     <string name="quantity">Q-ty</string>
     <string name="time_left">Time Left</string>
-    
+    <string name="choose_type">Choose Type:</string>
+    <string name="choose_product">Choose Product:</string>
+    <string name="choose_rating">Choose Rating:</string>
+
     <color name="white">#FFFFFF</color>
+    <color name="gray">#EEE</color>
+
+    <string name="title_activity_add_item_to_shop_list">AddItemToShopListActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

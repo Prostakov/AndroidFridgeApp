@@ -85,14 +85,12 @@ public class DBShopListAdapter {
 	}
 
 	// ---finds a record by name
-	public Cursor findRecord(String name) {
-		Cursor mCursor = db.query(true, DATABASE_TABLE, new String[] {
-				KEY_ROWID, KEY_NAME, KEY_RATING }, KEY_NAME + "=" + name, null,
-				null, null, null, null);
+	public long findRecord(String name) throws SQLException {
+		Cursor mCursor = db.rawQuery("SELECT * FROM "+DATABASE_TABLE+" WHERE "+KEY_NAME+" = ?", new String[] {name});
 		if (mCursor != null) {
 			mCursor.moveToFirst();
 		}
-		return mCursor;
+		return Long.parseLong(mCursor.getString(0));
 	}
 
 	// ---retrieves a particular record---

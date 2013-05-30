@@ -17,6 +17,6 @@ public class Ananas extends Fruit {
 	
 	@Override
 	public String getNameUA() {
-		return "Ананас";
+		return "Ананаси";
 	}
 }
