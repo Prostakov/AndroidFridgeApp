@@ -17,6 +17,9 @@
 	<string name="set_expiration">Set expiration date:</string>
 	<string name="set_date">Set Date</string>
 	<string name="reminder">Reminder:</string>
+	<string name="alternatives">Alternatives:</string>
+	<string name="save">Save</string>
+	<string name="cancel">Cancel</string>
 	
     <color name="white">#FFFFFF</color>
     <color name="gray">#EEE</color>

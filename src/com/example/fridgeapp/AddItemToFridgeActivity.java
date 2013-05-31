@@ -59,7 +59,7 @@ public class AddItemToFridgeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_item_to_fridge);
-		setTitle("Hello, Stackoverflow!");
+		setTitle("Add item to fridge");
 		db = new DBFridgeAdapter(this);
 		alarmTogglerSwitch = 0;
 		// setting adapter for products type spinner

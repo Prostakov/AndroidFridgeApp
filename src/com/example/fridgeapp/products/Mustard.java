@@ -4,10 +4,10 @@ import com.example.fridgeapp.product_classes.Sauce;
 
 public class Mustard extends Sauce {
 	public Mustard() {
-		carbohydrates = 2;
-		proteins = 2;
-		calories = 3;
-		fats = 4;
+		carbohydrates = "2";
+		proteins = "2";
+		calories = "3";
+		fats = "4";
 	}
 	
 	@Override

@@ -33,7 +33,7 @@ public final class R {
         public static final int TextView2=0x7f090005;
         public static final int TextView3=0x7f090006;
         public static final int TextView4=0x7f090007;
-        public static final int action_settings=0x7f090017;
+        public static final int action_settings=0x7f090023;
         public static final int activity_add_item_to_fridge_button=0x7f090008;
         public static final int activity_add_item_to_shop_list_button=0x7f09000b;
         public static final int activity_main=0x7f09000c;
@@ -43,16 +43,28 @@ public final class R {
         public static final int activity_main_fragment_shoplist=0x7f090014;
         public static final int activity_main_fragment_shoplist_button1=0x7f090016;
         public static final int activity_main_fragment_shoplist_table=0x7f090015;
+        public static final int button1=0x7f090021;
+        public static final int button2=0x7f090022;
         public static final int dateLabel=0x7f090003;
+        public static final int imageView1=0x7f090017;
         public static final int products_rating_spinner=0x7f090002;
         public static final int products_spinner=0x7f090001;
         public static final int products_type_spinner=0x7f090000;
         public static final int scrollView1=0x7f090011;
+        public static final int surrogatesText=0x7f090020;
         public static final int tableRow_main_shoplist_titles=0x7f09000e;
+        public static final int textCalories=0x7f09001c;
+        public static final int textCarbohydrates=0x7f09001e;
+        public static final int textFats=0x7f09001f;
+        public static final int textProteins=0x7f09001d;
         public static final int textView1=0x7f090004;
         public static final int textView2=0x7f09000f;
         public static final int textView3=0x7f090010;
         public static final int textView5=0x7f09000a;
+        public static final int titleTextCalories=0x7f090018;
+        public static final int titleTextCarbohydrates=0x7f09001a;
+        public static final int titleTextFats=0x7f09001b;
+        public static final int titleTextProteins=0x7f090019;
         public static final int toggleButton1=0x7f090009;
     }
     public static final class layout {
@@ -74,22 +86,25 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int add_item=0x7f050004;
+        public static final int alternatives=0x7f050010;
         public static final int app_name=0x7f050000;
+        public static final int cancel=0x7f050012;
         public static final int choose_product=0x7f05000a;
         public static final int choose_quantity=0x7f05000c;
         public static final int choose_rating=0x7f05000b;
         public static final int choose_type=0x7f050009;
-        public static final int hello_world=0x7f050011;
+        public static final int hello_world=0x7f050014;
         public static final int product=0x7f050005;
         public static final int quantity=0x7f050007;
         public static final int rating=0x7f050006;
         public static final int reminder=0x7f05000f;
+        public static final int save=0x7f050011;
         public static final int set_date=0x7f05000e;
         public static final int set_expiration=0x7f05000d;
         public static final int time_left=0x7f050008;
-        public static final int title_activity_add_item_to_fridge=0x7f050013;
-        public static final int title_activity_add_item_to_shop_list=0x7f050010;
-        public static final int title_activity_view_product_prop=0x7f050012;
+        public static final int title_activity_add_item_to_fridge=0x7f050016;
+        public static final int title_activity_add_item_to_shop_list=0x7f050013;
+        public static final int title_activity_view_product_prop=0x7f050015;
         public static final int title_section1=0x7f050002;
         public static final int title_section2=0x7f050003;
     }

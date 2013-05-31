@@ -10,10 +10,10 @@ import java.util.Locale;
 
 
 public class Product {
-	protected static int calories;
-	protected static int proteins;
-	protected static int fats;
-	protected static int carbohydrates;
+	protected static String calories;
+	protected static String proteins;
+	protected static String fats;
+	protected static String carbohydrates;
 	public String surrogates;
 	public String duedate;
 	public String time;
@@ -23,23 +23,42 @@ public class Product {
 	public Boolean alarm = false;
 	
 	public Product() {
-		carbohydrates = 0;
+		carbohydrates = "0";
+		proteins = "0";
+		fats = "0";
+		calories = "0";
 	}
 	
-	public int getCalories() {
+	public String getCalories() {
 		return calories;
 	}
 	
-	public int getProteins() {
+	public String getProteins() {
 		return proteins;
 	}
 	
-	public int getFats() {
+	public String getFats() {
 		return fats;
 	}
 	
-	public int getCarbohydrates() {
+	public String getCarbohydrates() {
 		return carbohydrates;
+	}
+	
+	public String getCaloriesTitle() {
+		return "Calories/100g:";
+	}
+	
+	public String getCarbohydratesTitle() {
+		return "Carbohydrates/100g:";
+	}
+	
+	public String getProteinsTitle() {
+		return "Proteins/100g:";
+	}
+	
+	public String getFatsTitle() {
+		return "Fats/100g:";
 	}
 	
 	public String getQuantity() {

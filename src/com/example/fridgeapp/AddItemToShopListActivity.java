@@ -45,6 +45,7 @@ public class AddItemToShopListActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_item_to_shop_list);
+		setTitle("Add item to shoplist");
 		db = new DBShopListAdapter(this);
 		// setting adapter for products type spinner
 		ArrayList<String> productTypeArray = Product.getProductTypesUA();

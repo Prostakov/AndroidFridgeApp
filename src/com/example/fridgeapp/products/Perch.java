@@ -4,10 +4,10 @@ import com.example.fridgeapp.product_classes.FishProduct;
 
 public class Perch extends FishProduct {
 	public Perch() {
-		carbohydrates = 2;
-		proteins = 2;
-		calories = 3;
-		fats = 4;
+		carbohydrates = "2";
+		proteins = "2";
+		calories = "3";
+		fats = "4";
 	}
 	
 	@Override

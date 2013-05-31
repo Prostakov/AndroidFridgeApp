@@ -34,7 +34,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.view.Display;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ViewProductPropActivity extends Activity {
@@ -42,17 +49,63 @@ public class ViewProductPropActivity extends Activity {
 	DBFridgeAdapter db;
 	Product product;
 	Context context = this;
+	EditText surrogatesText;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_product_prop);
+		TextView titleTextCalories = (TextView) findViewById(R.id.titleTextCalories);
+		TextView titleTextCarbohydrates = (TextView) findViewById(R.id.titleTextCarbohydrates);
+		TextView titleTextProteins = (TextView) findViewById(R.id.titleTextProteins);
+		TextView titleTextFats = (TextView) findViewById(R.id.titleTextFats);
+		TextView textCalories = (TextView) findViewById(R.id.textCalories);
+		TextView textCarbohydrates = (TextView) findViewById(R.id.textCarbohydrates);
+		TextView textFats = (TextView) findViewById(R.id.textFats);
+		TextView textProteins = (TextView) findViewById(R.id.textProteins);
+		surrogatesText = (EditText) findViewById(R.id.surrogatesText);
+		Button saveButton = (Button) findViewById(R.id.button1);
+		Button cancelButton = (Button) findViewById(R.id.button2);
 		db = new DBFridgeAdapter(context);
 		Intent intent = getIntent();
 		String productName = intent.getStringExtra("productName");
 		if (productName == null) return;
 		product = initProduct(Product.getProductNameEN(productName));
-		Toast.makeText( this, product.getNameUA(), Toast.LENGTH_SHORT).show();
+		setTitle(product.getNameUA());
+		ImageView productImage=(ImageView)findViewById(R.id.imageView1);
+		int id = getResources().getIdentifier("com.example.fridgeapp:drawable/" + product.getName().toLowerCase(), null, null);
+		if (id != 0) productImage.setImageResource(R.drawable.tomato);
+		titleTextCalories.setText(product.getCaloriesTitle());
+		titleTextCarbohydrates.setText(product.getCarbohydratesTitle());
+		titleTextProteins.setText(product.getProteinsTitle());
+		titleTextFats.setText(product.getFatsTitle());
+		textCalories.setText(product.getCalories());
+		textCarbohydrates.setText(product.getCarbohydrates());
+		textProteins.setText(product.getProteins());
+		textFats.setText(product.getFats());
+		surrogatesText.setText(product.surrogates);
+		saveButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String surrogates = surrogatesText.getText().toString();
+				db.open();
+				db.updateSurrogates(product.db_id, surrogates);
+				db.close();
+				Intent intent = new Intent(context, MainActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(intent);
+			}
+		});
+		cancelButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(context, MainActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(intent);
+			}
+		});
 	}
 
 	@Override
@@ -203,5 +256,8 @@ public class ViewProductPropActivity extends Activity {
 		}
 		return new Product();
 	}
-
+	
+	public void DisplayToast(String msg) {
+		Toast.makeText( this, msg, Toast.LENGTH_SHORT).show();
+	}
 }
