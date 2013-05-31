@@ -13,11 +13,17 @@
     <string name="choose_type">Choose Type:</string>
     <string name="choose_product">Choose Product:</string>
     <string name="choose_rating">Choose Rating:</string>
-
+    <string name="choose_quantity">Choose Quantity:</string>
+	<string name="set_expiration">Set expiration date:</string>
+	<string name="set_date">Set Date</string>
+	<string name="reminder">Reminder:</string>
+	
     <color name="white">#FFFFFF</color>
     <color name="gray">#EEE</color>
 
     <string name="title_activity_add_item_to_shop_list">AddItemToShopListActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_view_product_prop">ViewProductPropActivity</string>
+    <string name="title_activity_add_item_to_fridge">AddItemToFridgeActivity</string>
 
 </resources>

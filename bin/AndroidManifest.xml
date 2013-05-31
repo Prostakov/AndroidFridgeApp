@@ -26,6 +26,14 @@
             android:name="com.example.fridgeapp.AddItemToShopListActivity"
             android:label="@string/title_activity_add_item_to_shop_list" >
         </activity>
+        <activity
+            android:name="com.example.fridgeapp.ViewProductPropActivity"
+            android:label="@string/title_activity_view_product_prop" >
+        </activity>
+        <activity
+            android:name="com.example.fridgeapp.AddItemToFridgeActivity"
+            android:label="@string/title_activity_add_item_to_fridge" >
+        </activity>
     </application>
 
 </manifest>

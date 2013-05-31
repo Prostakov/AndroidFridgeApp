@@ -278,4 +278,7 @@ public class MainActivity extends FragmentActivity implements
 						+ c.getString(5) + "\n" + "6:" + c.getString(6) + "\n",
 				Toast.LENGTH_SHORT).show();
 	}
+	public void DisplayToast(String msg) {
+		Toast.makeText( this, msg, Toast.LENGTH_SHORT).show();
+	}
 }

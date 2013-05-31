@@ -96,7 +96,7 @@ public class DBFridgeAdapter {
     }
 
     //---deletes a particular record---
-    public boolean deleteContact(long rowId) 
+    public boolean deleteRecord(long rowId) 
     {
         return db.delete(DATABASE_TABLE, KEY_ROWID + "=" + rowId, null) > 0;
     }
