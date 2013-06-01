@@ -128,7 +128,7 @@ public class AddItemToFridgeActivity extends Activity {
 				}
 				String name = Product.getProductNameEN(spinnerProduct.getSelectedItem().toString());
 				String duedate = (String) editDate.getText();
-				String alarmtime = "";
+				String alarmtime = "0";
 				String surrogates = "";
 				int quantity = Integer.parseInt(spinnerProductQuantity.getSelectedItem().toString());
 				setAlarmTogglerSwitch();

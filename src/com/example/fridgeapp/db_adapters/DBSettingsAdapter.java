@@ -9,110 +9,105 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DBSettingsAdapter {
-    public static final String KEY_ROWID = "id";
-    public static final String KEY_REMINDER = "reminder";
-    public static final String KEY_REMINDER_TIME = "reminder_time";
-    private static final String TAG = "DBAdapter";
-    
-    private static final String DATABASE_NAME = "SettingsDB";
-    private static final String DATABASE_TABLE = "settings";
-    private static final int DATABASE_VERSION = 2;
+	public static final String KEY_ROWID = "id";
+	public static final String KEY_SIGNAL = "signal";
+	public static final String KEY_REMINDER = "reminder";
+	public static final String KEY_TIME = "time";
+	private static final String TAG = "DBAdapter";
 
-    private static final String DATABASE_CREATE =
-        "create table if not exists settings (id integer primary key autoincrement, "
-        + "reminder integer, reminder_time VARCHAR);";
-        
-    private final Context context;    
+	private static final String DATABASE_NAME = "SettingsDB";
+	private static final String DATABASE_TABLE = "settings";
+	private static final int DATABASE_VERSION = 2;
 
-    private DatabaseHelper DBHelper;
-    private SQLiteDatabase db;
+	private static final String DATABASE_CREATE = "create table if not exists settings (id integer primary key autoincrement, "
+			+ "signal VARCHAR, reminder VARCHAR, time VARCHAR);";
 
-    public DBSettingsAdapter(Context ctx) 
-    {
-        this.context = ctx;
-        DBHelper = new DatabaseHelper(context);
-    }
-        
-    private static class DatabaseHelper extends SQLiteOpenHelper 
-    {
-        DatabaseHelper(Context context) 
-        {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        }
+	private final Context context;
 
-        @Override
-        public void onCreate(SQLiteDatabase db) 
-        {
-        	try {
-        		db.execSQL(DATABASE_CREATE);	
-        	} catch (SQLException e) {
-        		e.printStackTrace();
-        	}
-        }
+	private DatabaseHelper DBHelper;
+	private SQLiteDatabase db;
 
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) 
-        {
-            Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
-                    + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS contacts");
-            onCreate(db);
-        }
-    }    
+	public DBSettingsAdapter(Context ctx) {
+		this.context = ctx;
+		DBHelper = new DatabaseHelper(context);
+	}
 
-    //---opens the database---
-    public DBSettingsAdapter open() throws SQLException 
-    {
-        db = DBHelper.getWritableDatabase();
-        return this;
-    }
+	private static class DatabaseHelper extends SQLiteOpenHelper {
+		DatabaseHelper(Context context) {
+			super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		}
 
-    //---closes the database---    
-    public void close() 
-    {
-        DBHelper.close();
-    }
-    
-    //---insert a record into the database---
-    public long insertRecord(long reminder, String reminder_time) 
-    {
-        ContentValues initialValues = new ContentValues();
-        initialValues.put(KEY_REMINDER, reminder);
-        initialValues.put(KEY_REMINDER_TIME, reminder_time);
-        return db.insert(DATABASE_TABLE, null, initialValues);
-    }
+		@Override
+		public void onCreate(SQLiteDatabase db) {
+			try {
+				db.execSQL(DATABASE_CREATE);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 
-    //---deletes a particular record---
-    public boolean deleteContact(long rowId) 
-    {
-        return db.delete(DATABASE_TABLE, KEY_ROWID + "=" + rowId, null) > 0;
-    }
+		@Override
+		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+			Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
+					+ newVersion + ", which will destroy all old data");
+			db.execSQL("DROP TABLE IF EXISTS contacts");
+			onCreate(db);
+		}
+	}
 
-    //---retrieves all the records---
-    public Cursor getAllRecords() 
-    {
-        return db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_REMINDER, KEY_REMINDER_TIME}, null, null, null, null, null);
-    }
+	// ---opens the database---
+	public DBSettingsAdapter open() throws SQLException {
+		db = DBHelper.getWritableDatabase();
+		return this;
+	}
 
-    //---retrieves a particular record---
-    public Cursor getRecord(long rowId) throws SQLException 
-    {
-        Cursor mCursor =
-                db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                KEY_REMINDER, KEY_REMINDER_TIME}, 
-                KEY_ROWID + "=" + rowId, null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
-        return mCursor;
-    }
+	// ---closes the database---
+	public void close() {
+		DBHelper.close();
+	}
 
-    //---updates a record---
-    public boolean updateRecord(long rowId, long reminder, String reminder_time) 
-    {
-        ContentValues args = new ContentValues();
-        args.put(KEY_REMINDER, reminder);
-        args.put(KEY_REMINDER_TIME, reminder_time);
-        return db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
-    }
+	// ---insert a record into the database---
+	private long initSettings(String signal, String reminder, String time) {
+		ContentValues initialValues = new ContentValues();
+		initialValues.put(KEY_ROWID, 1);
+		initialValues.put(KEY_SIGNAL, signal);
+		initialValues.put(KEY_REMINDER, reminder);
+		initialValues.put(KEY_TIME, time);
+		return db.insert(DATABASE_TABLE, null, initialValues);
+	}
+
+	// ---deletes a first record in SettingsDB
+	private boolean deleteSettings() {
+		return db.delete(DATABASE_TABLE, KEY_ROWID + "=" + 1, null) > 0;
+	}
+
+	// get quantity of records in SettingsDB
+	public int getDBCount() {
+		return db.query(DATABASE_TABLE,
+				new String[] { KEY_ROWID, KEY_SIGNAL, KEY_REMINDER, KEY_TIME },
+				null, null, null, null, null).getCount();
+	}
+
+	// ---retrieves a first record in SettingsDB
+	public Cursor getSettings() throws SQLException {
+		Cursor mCursor = db.query(true, DATABASE_TABLE, new String[] {
+				KEY_ROWID, KEY_SIGNAL, KEY_REMINDER, KEY_TIME }, KEY_ROWID
+				+ "=" + 1, null, null, null, null, null);
+		if (mCursor != null) mCursor.moveToFirst();
+		return mCursor;
+	}
+
+	// ---updates a record---
+	public boolean updateRecord(String signal, String reminder,
+			String time) {
+		if (getDBCount() == 0) {
+			initSettings(signal, reminder, time);
+			return true;
+		}
+		ContentValues args = new ContentValues();
+		args.put(KEY_SIGNAL, signal);
+		args.put(KEY_REMINDER, reminder);
+		args.put(KEY_TIME, time);
+		return db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + 1, null) > 0;
+	}
 }

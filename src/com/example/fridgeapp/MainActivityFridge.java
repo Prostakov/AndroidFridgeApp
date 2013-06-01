@@ -1,10 +1,11 @@
 package com.example.fridgeapp;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.example.fridgeapp.db_adapters.DBFridgeAdapter;
-import com.example.fridgeapp.db_adapters.DBShopListAdapter;
+import com.example.fridgeapp.db_adapters.DBSettingsAdapter;
 import com.example.fridgeapp.product_classes.Product;
 import com.example.fridgeapp.products.Ananas;
 import com.example.fridgeapp.products.Apple;
@@ -39,6 +40,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +83,7 @@ public class MainActivityFridge extends Fragment {
 		renderList();
 		return rootView;
 	}
-
+	
 	public void renderList() {
 		createProductsArray();
 		printAllProducts();

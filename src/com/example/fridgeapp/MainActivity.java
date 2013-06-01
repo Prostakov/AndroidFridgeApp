@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -24,7 +25,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +40,7 @@ public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
-
+	Context context = this;
 	ViewPager mViewPager;
 
 	@Override
@@ -47,7 +50,7 @@ public class MainActivity extends FragmentActivity implements
 		String changeTab = intent.getStringExtra("changeTab");
 		if (changeTab != null) {
 			if (changeTab.equalsIgnoreCase("2")) {
-				 mViewPager.setCurrentItem(1);
+				mViewPager.setCurrentItem(1);
 			}
 		}
 	}
@@ -122,8 +125,6 @@ public class MainActivity extends FragmentActivity implements
 			e.printStackTrace();
 		}
 
-		// this.deleteDatabase("FridgeDB");
-
 		// checking FridgeDB
 		try {
 			String destPath = "/data/data/" + getPackageName()
@@ -138,56 +139,17 @@ public class MainActivity extends FragmentActivity implements
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		// DBFridgeAdapter db = new DBFridgeAdapter(this);
-		// DBShopListAdapter db = new DBShopListAdapter(this);
-
-		// db.open();
-		// String recordId = db.findRecord("Pork");
-		// db.close();
-
-		// ---add some records to shoplist---
-
-		// db.open();
-		// long id = db.insertRecord("Cucumber", 10);
-		// id = db.insertRecord("Beef", 5);
-		// id = db.insertRecord("Chicken", 3);
-		// id = db.insertRecord("ChickenEggs", 2);
-		// id = db.insertRecord("Tomato", 9);
-		// id = db.insertRecord("Pork", 6);
-		// db.close();
-
-		// ---add some records to fridge---
-
-		// db.open();
-		// long id = db.insertRecord("Ananas", "3/06/2013", "11:06", "ï³ï³", 4,
-		// 0);
-		// id = db.insertRecord("Beef", "11/06/2013", "11:06", "ï³ï³", 12, 0);
-		// id = db.insertRecord("Chicken", "11/06/2013", "11:06", "ï³ï³", 25,
-		// 0);
-		// id = db.insertRecord("ChickenEggs", "11/06/2013", "11:06", "ï³ï³",
-		// 40, 0);
-		// id = db.insertRecord("Tomato", "11/06/2013", "11:06", "ï³ï³", 52, 0);
-		// id = db.insertRecord("Pork", "11/06/2013", "11:06", "ï³ï³", 42, 0);
-		// db.close();
-
-		// ---get all Records---
-		// db.open();
-		// Cursor c = db.getAllRecords();
-		// if (c.moveToFirst())
-		// {
-		// do {
-		// DisplayRecord(c);
-		// } while (c.moveToNext());
-		// }
-		// db.close();
-
-		// db.open();
-		// for (long i = 7; i < 13; i++) {
-		// db.deleteContact(i);
-		// }
-		// db.close();
-
+		
+		// initializing settings if they are not initialized
+		DBSettingsAdapter db = new DBSettingsAdapter(this);
+		db.open();
+		if (db.getDBCount() == 0) db.updateRecord("s", "0", "12:00");
+		db.close();
+	}
+	
+	public void getSettings() {
+		Intent intent = new Intent(context, SettingsActivity.class);
+		startActivity(intent);
 	}
 
 	@Override
@@ -197,6 +159,15 @@ public class MainActivity extends FragmentActivity implements
 		return true;
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.action_settings) {
+			getSettings();
+			return true;
+		}
+		return true;
+	}
+	
 	@Override
 	public void onTabSelected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
@@ -269,16 +240,4 @@ public class MainActivity extends FragmentActivity implements
 		outputStream.close();
 	}
 
-	public void DisplayRecord(Cursor c) {
-		Toast.makeText(
-				this,
-				"0:" + c.getString(0) + "\n" + "1:" + c.getString(1) + "\n"
-						+ "2:" + c.getString(2) + "\n" + "3:" + c.getString(3)
-						+ "\n" + "4:" + c.getString(4) + "\n" + "5:"
-						+ c.getString(5) + "\n" + "6:" + c.getString(6) + "\n",
-				Toast.LENGTH_SHORT).show();
-	}
-	public void DisplayToast(String msg) {
-		Toast.makeText( this, msg, Toast.LENGTH_SHORT).show();
-	}
 }

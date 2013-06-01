@@ -14,13 +14,13 @@
     <string name="choose_product">Choose Product:</string>
     <string name="choose_rating">Choose Rating:</string>
     <string name="choose_quantity">Choose Quantity:</string>
-	<string name="set_expiration">Set expiration date:</string>
-	<string name="set_date">Set Date</string>
-	<string name="reminder">Reminder:</string>
-	<string name="alternatives">Alternatives:</string>
-	<string name="save">Save</string>
-	<string name="cancel">Cancel</string>
-	
+    <string name="set_expiration">Set expiration date:</string>
+    <string name="set_date">Set Date</string>
+    <string name="reminder">Reminder:</string>
+    <string name="alternatives">Alternatives:</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+
     <color name="white">#FFFFFF</color>
     <color name="gray">#EEE</color>
 
@@ -28,5 +28,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_view_product_prop">ViewProductPropActivity</string>
     <string name="title_activity_add_item_to_fridge">AddItemToFridgeActivity</string>
+    <string name="title_activity_alarm">AlarmActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="signal">Signal</string>
+    <string name="vibration">Vibration</string>
+    <string name="choose_signal_type">Choose signal type:</string>
+    <string name="alarm_time">Alarm time:</string>
 
 </resources>

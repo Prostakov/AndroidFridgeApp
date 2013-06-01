@@ -11,26 +11,6 @@ public class Juice extends Beverage {
 	}
 	
 	@Override
-	public String getCaloriesTitle() {
-		return "Calories/100ml:";
-	}
-	
-	@Override
-	public String getCarbohydratesTitle() {
-		return "Carbohydrates/100ml:";
-	}
-	
-	@Override
-	public String getProteinsTitle() {
-		return "Proteins/100ml:";
-	}
-	
-	@Override
-	public String getFatsTitle() {
-		return "Fats/100ml:";
-	}
-	
-	@Override
 	public String getName() {
 		return "Juice";
 	}

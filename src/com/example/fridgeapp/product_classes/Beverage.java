@@ -19,4 +19,24 @@ public class Beverage extends Product {
 		resultArray.add("Cola");
 		return resultArray;
 	}
+	
+	@Override
+	public String getCaloriesTitle() {
+		return "Calories/100ml:";
+	}
+	
+	@Override
+	public String getCarbohydratesTitle() {
+		return "Carbohydrates/100ml:";
+	}
+	
+	@Override
+	public String getProteinsTitle() {
+		return "Proteins/100ml:";
+	}
+	
+	@Override
+	public String getFatsTitle() {
+		return "Fats/100ml:";
+	}
 }
