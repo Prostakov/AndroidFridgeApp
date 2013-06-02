@@ -64,8 +64,8 @@ public class ViewProductPropActivity extends Activity {
 		TextView textFats = (TextView) findViewById(R.id.textFats);
 		TextView textProteins = (TextView) findViewById(R.id.textProteins);
 		surrogatesText = (EditText) findViewById(R.id.surrogatesText);
-		Button saveButton = (Button) findViewById(R.id.button1);
-		Button cancelButton = (Button) findViewById(R.id.button2);
+		Button saveButton = (Button) findViewById(R.id.saveSettingsButton);
+		Button cancelButton = (Button) findViewById(R.id.cancelButton);
 		db = new DBFridgeAdapter(context);
 		Intent intent = getIntent();
 		String productName = intent.getStringExtra("productName");

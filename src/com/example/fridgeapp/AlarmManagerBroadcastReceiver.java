@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.widget.Toast;
 
 public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 	
@@ -24,17 +25,17 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
         wl.acquire();
         // Alarm processing
         Bundle extras = intent.getExtras();
-        String productName = extras.getString("name");
-        Intent activityIntent = new Intent(context, AlarmActivity.class);
-        activityIntent.putExtra("name", productName);
-		activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      	String productName = extras.getString("name");
+      	Intent activityIntent = new Intent(context, AlarmActivity.class);
+      	activityIntent.putExtra("name", productName);
+      	activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(activityIntent);
         //Release the lock
         wl.release();
 	}
 	
-    public void setAlarm(Context context, String date, String time, int productId) {
+    public void setExactAlarm(Context context, String date, String time) {
         int day = Integer.parseInt(date.substring(0,2));
         int month = Integer.parseInt(date.substring(3,5))-1;
         int year = Integer.parseInt(date.substring(6,10));
@@ -51,7 +52,30 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
         // and now alarm manager
     	AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(context, productId, intent, 0);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+    }
+    
+    public void setAlarm(Context context, String date, String time, int daysBoost, String productName) {
+        int day = Integer.parseInt(date.substring(0,2));
+        int month = Integer.parseInt(date.substring(3,5))-1;
+        int year = Integer.parseInt(date.substring(6,10));
+        int hour = Integer.parseInt(time.substring(0,2));
+        int minute = Integer.parseInt(time.substring(3,5));
+        // handling all the date and time issues
+        Calendar cal = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+        cal.set(Calendar.DATE, day);
+        cal.add(Calendar.DATE, daysBoost);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, minute);
+        cal.set(Calendar.SECOND, 0);  
+        // and now alarm manager
+    	AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
+        intent.putExtra("name",  productName);
+        PendingIntent pi = PendingIntent.getBroadcast(context, productName.hashCode(), intent, 0);
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
     }
     
