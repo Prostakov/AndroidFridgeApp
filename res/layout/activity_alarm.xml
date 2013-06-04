@@ -9,9 +9,88 @@
     tools:context=".AlarmActivity" >
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+        android:id="@+id/alarmProductNameTextView"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="50px" />
+
+    <TextView
+        android:id="@+id/alarmExpiresAtTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/alarmProductNameTextView"
+        android:layout_below="@+id/alarmProductNameTextView"
+        android:textSize="25px"
+        android:layout_marginTop="14dp"
+        android:gravity="center"
+        android:text="@string/expires_at"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+         />
+
+    <TextView
+        android:id="@+id/alarmProductDateTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/alarmExpiresAtTextView"
+        android:layout_below="@+id/alarmExpiresAtTextView"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="40px" />
+
+    <TextView
+        android:id="@+id/currentlyOnTheShopList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/alarmProductNameTextView"
+        android:layout_below="@+id/alarmProductNameTextView"
+        android:layout_marginTop="170dp"
+        android:gravity="center"
+        android:text="@string/item_on_the_shoplist"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="20px"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/turnOffAlarmButton"
+        android:layout_width="fill_parent"
+        android:layout_height="65dip"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="170dp"
+        android:onClick="showMainButtons"
+        android:text="@string/turn_off_alarm"
+        android:textSize="40px" />
+
+    <Button
+        android:id="@+id/alarmAddToShopListButton"
+        android:layout_width="fill_parent"
+        android:layout_height="60dip"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="250dp"
+        android:onClick="addProductToShopList"
+        android:text="@string/add_to_shoplist"
+        android:textSize="40px"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/alarmDelayButton"
+        android:layout_width="fill_parent"
+        android:layout_height="60dip"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="320dp"
+        android:onClick="delayProduct"
+        android:text="@string/delay"
+        android:textSize="40px"
+        android:visibility="invisible" />
 
 </RelativeLayout>

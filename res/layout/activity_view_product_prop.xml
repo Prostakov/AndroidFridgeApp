@@ -99,7 +99,7 @@
         android:textSize="16px" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/alarmProductNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/imageView1"

@@ -9,6 +9,7 @@
         android:targetSdkVersion="15" />
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -48,6 +49,10 @@
         <activity
             android:name="com.example.fridgeapp.SettingsActivity"
             android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name="com.example.fridgeapp.AlarmSetTimeActivity"
+            android:label="@string/title_activity_alarm_set_time" >
         </activity>
     </application>
 

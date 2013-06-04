@@ -147,7 +147,7 @@ public class DBFridgeAdapter {
 	public boolean switchOffAlarm(long rowId) {
 		Cursor rCursor = getRecord(rowId);
 		return updateRecord(rowId, rCursor.getString(1), rCursor.getString(2),
-				rCursor.getString(3), rCursor.getString(4),
+				"0", rCursor.getString(4),
 				Long.parseLong(rCursor.getString(5)), 0);
 	}
 }

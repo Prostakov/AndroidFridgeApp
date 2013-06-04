@@ -5,7 +5,7 @@
     android:padding="3dip" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/alarmProductNameTextView"
         android:layout_width="210dip"
         android:layout_height="wrap_content"
         android:layout_marginLeft="3dip"

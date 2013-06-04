@@ -34,5 +34,12 @@
     <string name="vibration">Vibration</string>
     <string name="choose_signal_type">Choose signal type:</string>
     <string name="alarm_time">Alarm time:</string>
+    <string name="expires_at">expires at</string>
+    <string name="turn_off_alarm">Turn Off</string>
+    <string name="add_to_shoplist">Add To Shoplist</string>
+    <string name="delay">Delay</string>
+    <string name="item_on_the_shoplist">This item is currently on the shoplist!</string>
+    <string name="title_activity_alarm_set_time">AlarmSetTimeActivity</string>
+    <string name="set">Set</string>
 
 </resources>

@@ -269,7 +269,7 @@ public class MainActivityFridge extends Fragment {
 	public void addItemToList(String name, String quantity, String time) {
 		TableRow tableRow = (TableRow) View.inflate(getActivity(),
 				R.layout.table_item_row_for_fridge, null);
-		TextView productName = (TextView) tableRow.findViewById(R.id.textView1);
+		TextView productName = (TextView) tableRow.findViewById(R.id.alarmProductNameTextView);
 		TextView productQuantity = (TextView) tableRow
 				.findViewById(R.id.textView2);
 		TextView productTimeLeft = (TextView) tableRow
@@ -283,7 +283,7 @@ public class MainActivityFridge extends Fragment {
 			public void onClick(View v) {
 				TableRow tableRow = (TableRow) v;
 				TextView name = (TextView) tableRow
-						.findViewById(R.id.textView1);
+						.findViewById(R.id.alarmProductNameTextView);
 				dialogTempText = (String) name.getText();
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 						getActivity());

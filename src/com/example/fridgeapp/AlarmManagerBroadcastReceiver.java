@@ -35,7 +35,7 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
         wl.release();
 	}
 	
-    public void setExactAlarm(Context context, String date, String time) {
+    public void setExactAlarm(Context context, String date, String time, String productName) {
         int day = Integer.parseInt(date.substring(0,2));
         int month = Integer.parseInt(date.substring(3,5))-1;
         int year = Integer.parseInt(date.substring(6,10));
@@ -52,7 +52,8 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
         // and now alarm manager
     	AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
+        intent.putExtra("name",  productName);
+        PendingIntent pi = PendingIntent.getBroadcast(context, productName.hashCode(), intent, 0);
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
     }
     

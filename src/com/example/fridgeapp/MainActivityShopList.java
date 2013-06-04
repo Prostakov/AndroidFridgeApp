@@ -60,6 +60,7 @@ public class MainActivityShopList extends Fragment {
 	DBShopListAdapter db;
 	List<Product> productsArray;
 	protected String dialogTempText;
+	View globRootView;
 
 	public MainActivityShopList() {
 		productsArray = new ArrayList<Product>();
@@ -70,27 +71,35 @@ public class MainActivityShopList extends Fragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(
 				R.layout.activity_main_fragment_shoplist, container, false);
-		tableLayout = (TableLayout) rootView
+		globRootView = rootView;
+		return rootView;
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		tableLayout = (TableLayout) globRootView
 				.findViewById(R.id.activity_main_fragment_shoplist_table);
-		add_item_button = (Button) rootView
+		add_item_button = (Button) globRootView
 				.findViewById(R.id.activity_main_fragment_shoplist_button1);
 		add_item_button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(), AddItemToShopListActivity.class);
+				Intent intent = new Intent(getActivity(),
+						AddItemToShopListActivity.class);
 				startActivity(intent);
 			}
 		});
 		db = new DBShopListAdapter(getActivity());
 		renderList();
-		return rootView;
 	}
 
 	public void renderList() {
 		createProductsArray();
 		sortProductsArray();
-		printAllProducts();		
+		printAllProducts();
 	}
+
 	public void createProductsArray() {
 		productsArray.clear();
 		db.open();
@@ -259,7 +268,8 @@ public class MainActivityShopList extends Fragment {
 	public void addItemToList(String name, String rating) {
 		TableRow tableRow = (TableRow) View.inflate(getActivity(),
 				R.layout.table_item_row_for_shoplist, null);
-		TextView productName = (TextView) tableRow.findViewById(R.id.textView1);
+		TextView productName = (TextView) tableRow
+				.findViewById(R.id.alarmProductNameTextView);
 		TextView productRating = (TextView) tableRow
 				.findViewById(R.id.textView2);
 		productName.setText(name);
@@ -271,7 +281,7 @@ public class MainActivityShopList extends Fragment {
 			public void onClick(View v) {
 				TableRow tableRow = (TableRow) v;
 				TextView name = (TextView) tableRow
-						.findViewById(R.id.textView1);
+						.findViewById(R.id.alarmProductNameTextView);
 				dialogTempText = (String) name.getText();
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 						getActivity());
@@ -302,7 +312,8 @@ public class MainActivityShopList extends Fragment {
 																long recordId = db
 																		.findRecord(Product
 																				.getProductNameEN(dialogTempText));
-																if (recordId != -1) db.deleteRecord(recordId);
+																if (recordId != -1)
+																	db.deleteRecord(recordId);
 																db.close();
 																renderList();
 															}
