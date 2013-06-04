@@ -79,10 +79,10 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
     }
     
-    public void cancelAlarm(Context context, int productId){
+    public void cancelAlarm(Context context, String productName){
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
-        PendingIntent sender = PendingIntent.getBroadcast(context, productId, intent, 0); 
+        PendingIntent sender = PendingIntent.getBroadcast(context, productName.hashCode(), intent, 0); 
         alarmManager.cancel(sender);
     }
 }

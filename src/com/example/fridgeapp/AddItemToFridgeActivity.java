@@ -8,6 +8,7 @@ import java.util.Locale;
 
 import com.example.fridgeapp.AddItemToShopListActivity.productTypeSelectListener;
 import com.example.fridgeapp.db_adapters.DBFridgeAdapter;
+import com.example.fridgeapp.db_adapters.DBSettingsAdapter;
 import com.example.fridgeapp.db_adapters.DBShopListAdapter;
 import com.example.fridgeapp.product_classes.Beverage;
 import com.example.fridgeapp.product_classes.BreadProduct;
@@ -25,6 +26,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,6 +44,8 @@ import android.widget.ToggleButton;
 public class AddItemToFridgeActivity extends Activity {
 
 	DBFridgeAdapter db;
+	DBSettingsAdapter dbSettings;
+	private AlarmManagerBroadcastReceiver alarm;
 	Calendar myCalendar = Calendar.getInstance();
 	TextView editDate;
 	Button add_item_button;
@@ -61,6 +65,8 @@ public class AddItemToFridgeActivity extends Activity {
 		setContentView(R.layout.activity_add_item_to_fridge);
 		setTitle("Add item to fridge");
 		db = new DBFridgeAdapter(this);
+		dbSettings = new DBSettingsAdapter(this);
+		alarm = new AlarmManagerBroadcastReceiver();
 		alarmTogglerSwitch = 0;
 		// setting adapter for products type spinner
 		ArrayList<String> productTypeArray = Product.getProductTypesUA();
@@ -135,6 +141,17 @@ public class AddItemToFridgeActivity extends Activity {
 				db.open();
 				long id = db.createRecord(name, duedate, alarmtime, surrogates, quantity, alarmTogglerSwitch);
 				db.close();
+				// return if item already exists
+				if (id == -1) {
+					DisplayToast(name+" is already in the fridge!");
+					return;
+				}
+				// set the alarm
+				dbSettings.open();
+				Cursor settings = dbSettings.getSettings();
+				dbSettings.close();
+				if (alarmTogglerSwitch == 1)
+					alarm.setAlarm(context, duedate, settings.getString(3), Integer.parseInt(settings.getString(2)), name);
 				Intent intent = new Intent(context, MainActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

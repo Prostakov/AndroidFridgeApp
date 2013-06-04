@@ -58,6 +58,7 @@ public class MainActivityFridge extends Fragment {
 	DBFridgeAdapter db;
 	List<Product> productsArray;
 	protected String dialogTempText;
+	private AlarmManagerBroadcastReceiver alarm;
 
 	public MainActivityFridge() {
 		productsArray = new ArrayList<Product>();
@@ -68,6 +69,7 @@ public class MainActivityFridge extends Fragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(
 				R.layout.activity_main_fragment_fridge, container, false);
+		alarm = new AlarmManagerBroadcastReceiver();
 		tableLayout = (TableLayout) rootView
 				.findViewById(R.id.activity_main_fragment_fridge_table);
 		add_item_button = (Button) rootView
@@ -308,12 +310,13 @@ public class MainActivityFridge extends Fragment {
 															public void onClick(
 																	DialogInterface dialog,
 																	int id) {
+																String productName = Product.getProductNameEN(dialogTempText); 
 																db.open();
-																long recordId = db
-																		.findRecord(Product
-																				.getProductNameEN(dialogTempText));
-																if (recordId != -1)
+																long recordId = db.findRecord(productName);
+																if (recordId != -1) {
 																	db.deleteRecord(recordId);
+																	alarm.cancelAlarm(getActivity(), productName);
+																}
 																db.close();
 																renderList();
 															}
